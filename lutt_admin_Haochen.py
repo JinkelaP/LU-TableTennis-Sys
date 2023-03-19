@@ -1,6 +1,6 @@
 ##############################  LU TABLE TENNIS ADMINISTRATION  ###############################
 ### Name:   Haochen Zhu
-### Student ID: 
+### Student ID: 1153918
 ################################################################################################## 
 
 import lutt_admin_data       #lutt_admin_data.py contains the data lists and must be in the same folder as this file
@@ -166,31 +166,49 @@ def addTeam():
                     player2Input = True
                     break
     
+    # Check if teamName is unique. If not, another backup name consisting of reversed-ordered surname will be checked. 
+    # If also not unique, user will be asked to create a new name.
+    # The new name will also be checked.
     newTeamName = newSurname1 + newSurname2
-    
-    # Check if teamName is unique
-    teamNameCheckResult = None
+    newTeamName2 = newSurname2 + newSurname1
     while True:
         for key in dbTeams.keys():
             if newTeamName.upper() == key.upper():
-                teamNameCheckResult = True
-                print("Sorry, the auto-generated team name '{}' has been registered in the database.".format(newTeamName))
-                break
+                for key in dbTeams.keys():
+                    if newTeamName2 == None:
+                        teamNameCheckResult = True
+                        break
+                    if newTeamName2.upper() == key.upper():
+                        teamNameCheckResult = True
+                        print("Sorry, the auto-generated team name '{}' and '{}' has been registered in the database.".format(newTeamName,newTeamName2))
+                        break
+                
+                if teamNameCheckResult == True:
+                    break
+                newTeamName = newTeamName2
+                teamNameCheckResult = False
+
             else:
                 teamNameCheckResult = False
         
         if teamNameCheckResult == False:
+            if newTeamName2 == newTeamName:
+                print("********\nthe auto-generated team name '{}{}' has been registered by another team.\nThus, the new team's name has been changed to '{}'\n********\n".format(newSurname1,newSurname2,newTeamName))
+            print('================')
             print('Team name check PASSED.\n')
             break
         elif teamNameCheckResult == True:
             newTeamName = str(input("Please create a different team name: "))
+            newTeamName2 = None
     
     
     # Add new team to the dictionary
     dbTeams[newTeamName] = [newName1Tuple,newName2Tuple]
 
     print(f"Congrats! The team has been registered succesfully.\nTeam: {newTeamName}\nPlayer1: {newFirstname1} {newSurname1}\nPlayer2: {newFirstname2} {newSurname2}")
-    input('======\nPress Enter to return to menu.')
+    print('================')
+    input('Press Enter to return to menu.')
+    return
 
 
 
