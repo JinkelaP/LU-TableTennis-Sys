@@ -109,14 +109,26 @@ def addTeam():
                 return True
         return False
     
+
     # Registering the first new player
     while True:
         newFirstname1 = str(input('Please type the firstname of player 1: ')).casefold().capitalize()
         newSurname1 = str(input('Please type the Surname of player 1: ')).casefold().capitalize()
         newName1Tuple = tuple((newFirstname1,newSurname1))
+        
+        if newFirstname1.isnumeric() == True or newSurname1.isnumeric() == True:
+            nameCheckFail = str(input("==========\n**CAUTION**\nThe player's name cannot contain numbers only. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:"))
+            if nameCheckFail.upper() == 'Q':
+                return print('Return menu. No new team added.')
+        
+        else:
+            break
+        
+        
         # If the player has been registered, the admin can either input a new name or leave the addTeam function
+    while True:   
         if nameCheck(newName1Tuple) == True:
-            nameCheckFail = str(input('==========\n**CAUTION**The player has been registered into another team! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
+            nameCheckFail = str(input('==========\n**CAUTION**\nThe player has been registered into another team! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
             if nameCheckFail.upper() == 'Q':
                 return print('Return menu. No new team added.')
                 
@@ -130,11 +142,11 @@ def addTeam():
         newName2Tuple = tuple((newFirstname2,newSurname2))
         # If the player has been registered in other teams or in the player 1, the admin can either input a new name or leave the addTeam function
         if nameCheck(newName2Tuple) == True:
-            nameCheckFail = str(input('****CAUTION****\nThe player has been registered into another team! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
+            nameCheckFail = str(input('==========\n****CAUTION****\nThe player has been registered into another team! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
             if nameCheckFail.upper() == 'Q':
                 return print('Return menu. No new team added.')
         elif newName1Tuple == newName2Tuple:
-            nameCheckFail = str(input('****CAUTION****\nThe player name has been input as player 1! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
+            nameCheckFail = str(input('==========\n****CAUTION****\nThe player name has been input as player 1! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
             if nameCheckFail.upper() == 'Q':
                 return print('Return menu. No new team added.')
         else:
