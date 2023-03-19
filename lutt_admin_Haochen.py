@@ -96,8 +96,8 @@ def addTeam():
     # add a team. Check a Player does not already exist.
     # Generate the team name and check that it does not already exist
     # Team Name is First Surname and Second Surname joined together each with an initial capital letter
-    print('================')
-    #Function of checking if the player has already been registered in the other team
+    # =================
+    # Function of checking if the player has already been registered in the other team
     def nameCheck(newNameTuple):
         playerList = []
         for team in dbTeams.keys():
@@ -109,54 +109,66 @@ def addTeam():
                 return True
         return False
     
-
+    player1Input = False
+    player2Input = False
     # Registering the first new player
-    while True:
+    while player1Input == False:
+        print('================')
         newFirstname1 = str(input('Please type the firstname of player 1: ')).casefold().capitalize()
         newSurname1 = str(input('Please type the Surname of player 1: ')).casefold().capitalize()
         newName1Tuple = tuple((newFirstname1,newSurname1))
-        
+        #
         if newFirstname1.isnumeric() == True or newSurname1.isnumeric() == True:
-            nameCheckFail = str(input("==========\n**CAUTION**\nThe player's name cannot contain numbers only. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:"))
+            nameCheckFail = str(input("*********************\n**  C A U T I O N  **\n*********************\nThe player's name must contain alphabet letters. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:"))
             if nameCheckFail.upper() == 'Q':
                 return print('Return menu. No new team added.')
         
         else:
-            break
-        
-        
         # If the player has been registered, the admin can either input a new name or leave the addTeam function
-    while True:   
-        if nameCheck(newName1Tuple) == True:
-            nameCheckFail = str(input('==========\n**CAUTION**\nThe player has been registered into another team! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
-            if nameCheckFail.upper() == 'Q':
-                return print('Return menu. No new team added.')
-                
-        else:
-            print('Player 1 name check PASSED.\n')
-            break
+            while True:   
+                if nameCheck(newName1Tuple) == True:
+                    nameCheckFail = str(input('*********************\n**  C A U T I O N  **\n*********************\nThe player has been registered into another team! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
+                    if nameCheckFail.upper() == 'Q':
+                        return print('Return menu. No new team added.')
+                    break
+                        
+                else:
+                    print('Player 1 name check PASSED.\n')
+                    player1Input = True
+                    break
 
-    while True:
+    while player2Input == False:
+        print('================')
         newFirstname2 = str(input('Please type the firstname of player 2: ')).casefold().capitalize()
         newSurname2 = str(input('Please type the Surname of player 2: ')).casefold().capitalize()
         newName2Tuple = tuple((newFirstname2,newSurname2))
-        # If the player has been registered in other teams or in the player 1, the admin can either input a new name or leave the addTeam function
-        if nameCheck(newName2Tuple) == True:
-            nameCheckFail = str(input('==========\n****CAUTION****\nThe player has been registered into another team! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
+        if newFirstname2.isnumeric() == True or newSurname2.isnumeric() == True:
+            nameCheckFail = str(input("*********************\n**  C A U T I O N  **\n*********************\nThe player's name must contain alphabet letters. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:"))
             if nameCheckFail.upper() == 'Q':
                 return print('Return menu. No new team added.')
-        elif newName1Tuple == newName2Tuple:
-            nameCheckFail = str(input('==========\n****CAUTION****\nThe player name has been input as player 1! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
-            if nameCheckFail.upper() == 'Q':
-                return print('Return menu. No new team added.')
+        
         else:
-            print('Player 2 name check PASSED.\n')
-            break
+
+        # If the player has been registered in other teams or in the player 1, the admin can either input a new name or leave the addTeam function
+            while True:    
+                if nameCheck(newName2Tuple) == True:
+                    nameCheckFail = str(input('*********************\n**  C A U T I O N  **\n*********************\nThe player has been registered into another team! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
+                    if nameCheckFail.upper() == 'Q':
+                        return print('Return menu. No new team added.')
+                    break
+                elif newName1Tuple == newName2Tuple:
+                    nameCheckFail = str(input('*********************\n**  C A U T I O N  **\n*********************\nThe player name has been input as player 1! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
+                    if nameCheckFail.upper() == 'Q':
+                        return print('Return menu. No new team added.')
+                    break
+                else:
+                    print('Player 2 name check PASSED.\n')
+                    player2Input = True
+                    break
     
     newTeamName = newSurname1 + newSurname2
     
     # Check if teamName is unique
-    teamNameCheck = None
     teamNameCheckResult = None
     while True:
         for key in dbTeams.keys():
