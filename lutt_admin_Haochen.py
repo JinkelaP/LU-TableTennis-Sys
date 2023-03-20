@@ -278,7 +278,8 @@ def addResult():
         
         addResultCols = {'Index':int,'Team 1':str,'Score T1':int or bool,'Team 2':str, 'Score T2':int or bool}
         drawListDisplay = []
-
+        # use enumerate to add the index to a temporary tuple 
+        # so that user can choose the match
         for index,newList in enumerate(drawList):
             newList = drawList[index].copy()
             newList.insert(0,index)
@@ -303,7 +304,7 @@ def addResult():
                 matchChosen[index] = ""
         
         print("{0: ^7}|{1: ^20}|{2:^10}| VS |{4:^10}|{3: ^20}|".format(*matchChosen))
-
+        # Input the scores and store them into the drawList
         while True:
             matchScore1 = input(f'Please input the score of {drawListDisplay[int(matchAddResultIndex)][1]}: ')
             matchScore2 = input(f'Please input the score of {drawListDisplay[int(matchAddResultIndex)][3]}: ')
@@ -329,7 +330,7 @@ def addResult():
                 break
 
 
-
+# display the winner of matches
 def displayWinners():
     if drawCreatedOnce == False:
         print("\n*********************\n**  C A U T I O N  **\n*********************\nYou need to CREAT THE DRAW before listing the draw when\n      - Running the program at the first time\nOR    - Added new teams.\n")
@@ -346,7 +347,7 @@ def displayWinners():
     
     addResultCols = {'WINNER':str,'Team 1':str,'Score T1':int or bool,'Team 2':str, 'Score T2':int or bool}
     drawListDisplay = []
-
+# If results are None (results not added), display N/A, otherwise show the winner.
     for index,newList in enumerate(drawList):
         newList = drawList[index].copy()
         if (newList[1] == None) or (newList[3] == None) == True:
