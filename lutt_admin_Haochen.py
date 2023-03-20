@@ -44,11 +44,11 @@ def columnOutput(dbData,cols,formatStr):
 def listDraw():
     # Print out a copy of the draw. If listDraw() is operated before createDraw(), user will be notified.
     if drawCreatedOnce == False or drawList == []:
-        print("\n*********************\n**  C A U T I O N  **\n*********************\nYou need to CREATE THE DRAW before listing the draw when\n      - Running the program at the first time\nOR    - Added new teams.\n")
+        print("\n*********************\n**  C A U T I O N  **\n*********************\nYou need to CREAT THE DRAW before listing the draw when\n      - Running the program at the first time\nOR    - Added new teams.\n")
     
     print("\n=== DRAW LIST ===\n")
     colNames = {'TEAM 1': str, 'SCORE T1': int or bool, 'TEAM 2': str, 'SCORE T2': int or bool}
-    columnOutput(drawList,colNames,"|{: <17}|{: <10}|{: <17}|{: <10}|")
+    columnOutput(drawList,colNames,"|{: ^20}|{: ^10}|{: ^20}|{: ^10}|")
     input("\nPress Enter to continue.")     # End function with this line
 
 def listTeams():
@@ -57,7 +57,7 @@ def listTeams():
     for team in dbTeams.keys():
         displayList.append((team,f'{dbTeams[team][0][0]} {dbTeams[team][0][1]}',f'{dbTeams[team][1][0]} {dbTeams[team][1][1]}'))
     print("\nALL TEAMS\n")
-    columnOutput(displayList,colTeams,"|{: <15} |{: <15} |{: <15}|") #example of how to call columnOutput function
+    columnOutput(displayList,colTeams,"|{: ^15} |{: ^15} |{: ^15}|") #example of how to call columnOutput function
     
     
     input("\nPress Enter to continue.")     # End function with this line
@@ -77,7 +77,7 @@ def listMembersSurnameAlpha():
     sortedPlayers = sorted(playerList,key=sortFunc)
     # Print it out by using columnOutput()
     colNames = {'FIRSTNAME': str, 'SURNAME': str}
-    columnOutput(sortedPlayers,colNames,"|{: <11} |{: <11}|")
+    columnOutput(sortedPlayers,colNames,"|{: ^15}|{: ^15}|")
     input("\nPress Enter to continue.")     # End function with this line
 
 def listMembersFirstnameAlpha():
@@ -94,7 +94,7 @@ def listMembersFirstnameAlpha():
     sortedPlayers = sorted(playerList,key=sortFunc)
     # Print it out by using columnOutput()
     colNames = {'FIRSTNAME': str, 'SURNAME': str}
-    columnOutput(sortedPlayers,colNames,"|{: <11} |{: <11}|")
+    columnOutput(sortedPlayers,colNames,"|{: ^15}|{: ^15}|")
     input("\nPress Enter to continue.")     # End function with this line
 
 def addTeam():
@@ -260,7 +260,26 @@ def createDraw():
 
 def addResult():
     #update the result of a match, hint use the enumerate function to identify which match to update
-    pass
+    
+    global drawList
+    print('================')
+    if drawList == []:
+        print('*********************\n**  C A U T I O N  **\n*********************\nYou have not creat the draw!')
+        return input('Press Enter to return to menu.')
+    print('Please choose the match you are going to add results:\n')
+    
+    addResultCols = {'Index':int,'Team 1':str,'VS':str,'Team 2':str}
+    drawListDisplay = []
+    # for i in range(len(drawList)):
+    for index in range(len(drawList)):
+        list = drawList[index].copy()
+        list.insert(0,index)
+        drawListDisplay.append(tuple(list))
+    columnOutput(drawListDisplay,addResultCols,"{0: ^7}|{1: ^20} | VS | {3: ^20}|")
+
+    
+    print('================')
+    input('Press Enter to return to menu.')
 
 
 
