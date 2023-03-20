@@ -11,6 +11,8 @@
 
 import lutt_admin_data       #lutt_admin_data.py contains the data lists and must be in the same folder as this file
 import datetime
+import os
+import platform
 
 # The list variables
 colTeams = lutt_admin_data.colTeams
@@ -57,6 +59,7 @@ def listDraw():
     colNames = {'TEAM 1': str, 'SCORE T1': int or bool,'TEAM 2': str, 'SCORE T2': int or bool}
     columnOutput(drawList,colNames,"|{0: ^20}|{1: ^10}| VS |{3: ^10}|{2: ^20}|")
     input("\nPress Enter to continue.")     # End function with this line
+
 
 def listTeams():
     # Print a list of the teams
@@ -369,6 +372,13 @@ def displayWinners():
     print('\n================\n')
     input('[Press ENTER to exit]')
 
+# Provide a clean terminal for user after every function
+def clearTerminal():
+    if platform.system().lower() == "windows":
+        os.system("cls")
+    else:
+        os.system("clear")
+
 
 #function to display the menu
 def dispMenu():
@@ -408,10 +418,12 @@ while response.upper() != "Q":
     elif response == "8":
         displayWinners()
     elif response.upper() == "R":
-        print("The menu has been repeated")
-    else:
-        print("invalid response, please re-enter")
+        input("[Press Enter]The menu will be repeated")
 
+    else:
+        input("[Press Enter]invalid response, please re-enter")
+
+    clearTerminal()
     print("")
     dispMenu()
     response = input("Please select menu choice: ")
