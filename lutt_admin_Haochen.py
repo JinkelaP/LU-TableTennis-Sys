@@ -3,6 +3,12 @@
 ### Student ID: 1153918
 ################################################################################################## 
 
+#
+# Add colors for winners and cautions
+#
+
+
+
 import lutt_admin_data       #lutt_admin_data.py contains the data lists and must be in the same folder as this file
 import datetime
 
