@@ -328,7 +328,7 @@ def addResult():
         
         print('\n=================')
         print('New Result Created!')
-        print("|{0: ^20}|{1:^10}| VS |{3:^10}|{2: ^20}|".format(*matchResultAddOK))
+        # print("|{0: ^20}|{1:^10}| VS |{3:^10}|{2: ^20}|".format(*matchResultAddOK))
         print('=================\n')
         
         sufAddResult = input('Input Q to return to menu or ENTER to add another results.')
