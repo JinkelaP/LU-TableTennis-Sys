@@ -249,6 +249,7 @@ def createDraw():
                     if duplicatedReg == False:
                         drawList.append(list([teamList[j],None,teamList[i],None]))
 
+
     print('\n=================')
     print('New Draw Created!')
     print('=================\n')
@@ -266,16 +267,19 @@ def addResult():
     if drawList == []:
         print('*********************\n**  C A U T I O N  **\n*********************\nYou have not creat the draw!')
         return input('Press Enter to return to menu.')
-    print('Please choose the match you are going to add results:\n')
     
     addResultCols = {'Index':int,'Team 1':str,'VS':str,'Team 2':str}
     drawListDisplay = []
-    # for i in range(len(drawList)):
-    for index in range(len(drawList)):
+
+    for index,list in enumerate(drawList):
         list = drawList[index].copy()
         list.insert(0,index)
         drawListDisplay.append(tuple(list))
     columnOutput(drawListDisplay,addResultCols,"{0: ^7}|{1: ^20} | VS | {3: ^20}|")
+    matchAddResultIndex = input('Please choose the match you are going to add results:')
+    
+    if matchAddResultIndex.isnumeric() == False:
+        print('CAUTION')
 
     
     print('================')
