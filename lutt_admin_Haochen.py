@@ -42,8 +42,13 @@ def columnOutput(dbData,cols,formatStr):
 
 
 def listDraw():
-    # Print out a copy of the draw
+    # Print out a copy of the draw. If listDraw() is operated before createDraw(), user will be notified.
+    if drawCreatedOnce == False or drawList == []:
+        print("\n*********************\n**  C A U T I O N  **\n*********************\nYou need to CREATE THE DRAW before listing the draw when\n      - Running the program at the first time\nOR    - Added new teams.\n")
     
+    print("\n=== DRAW LIST ===\n")
+    colNames = {'TEAM 1': str, 'SCORE T1': int or bool, 'TEAM 2': str, 'SCORE T2': int or bool}
+    columnOutput(drawList,colNames,"|{: <17}|{: <10}|{: <17}|{: <10}|")
     input("\nPress Enter to continue.")     # End function with this line
 
 def listTeams():
@@ -71,7 +76,7 @@ def listMembersSurnameAlpha():
     sortFunc = lambda nameInTuple: (nameInTuple[1],nameInTuple[0])
     sortedPlayers = sorted(playerList,key=sortFunc)
     # Print it out by using columnOutput()
-    colNames = {'Firstname': str, 'Surname': str}
+    colNames = {'FIRSTNAME': str, 'SURNAME': str}
     columnOutput(sortedPlayers,colNames,"|{: <11} |{: <11}|")
     input("\nPress Enter to continue.")     # End function with this line
 
@@ -88,7 +93,7 @@ def listMembersFirstnameAlpha():
     sortFunc = lambda row: (row[0],row[1])
     sortedPlayers = sorted(playerList,key=sortFunc)
     # Print it out by using columnOutput()
-    colNames = {'Firstname': str, 'Surname': str}
+    colNames = {'FIRSTNAME': str, 'SURNAME': str}
     columnOutput(sortedPlayers,colNames,"|{: <11} |{: <11}|")
     input("\nPress Enter to continue.")     # End function with this line
 
@@ -204,6 +209,8 @@ def addTeam():
     
     # Add new team to the dictionary
     dbTeams[newTeamName] = [newName1Tuple,newName2Tuple]
+    global drawCreatedOnce
+    drawCreatedOnce = False
 
     print(f"Congrats! The team has been registered succesfully.\nTeam: {newTeamName}\nPlayer1: {newFirstname1} {newSurname1}\nPlayer2: {newFirstname2} {newSurname2}")
     print('================')
@@ -212,10 +219,42 @@ def addTeam():
 
 
 
-
+teamList = []
+drawList = []
+drawCreatedOnce = False
+drawCreatedFirst = False
 def createDraw():
-    #each team should play each other team, but only once.
+    global teamList
+    teamList = []
+    global drawList
+    global drawCreatedFirst
+    global drawCreatedOnce
+    # Each team should play each other team, but only once.
+    # If the draw has been created once, and new teams are added after that, 
+    # only new draws will be appended into the list in order to keep the match results of previous created draws.
+    teamList = list(dbTeams.keys())
+    for i in range(0, len(teamList)):
+        for j in range(i, len(teamList)):
+            if i != j:
+                if drawCreatedFirst == False:
+                    drawList.append(list([teamList[j],None,teamList[i],None]))
+                else:
+                    for draw in drawList:
+                        possibility1 = draw[0] == teamList[j] and draw[2] == teamList[i]
+                        possibility2 = draw[2] == teamList[j] and draw[0] == teamList[i]
+                        duplicatedReg = possibility1 or possibility2
+                        
+                        if duplicatedReg == True:
+                            break
+                    if duplicatedReg == False:
+                        drawList.append(list([teamList[j],None,teamList[i],None]))
 
+    print('\n=================')
+    print('New Draw Created!')
+    print('=================\n')
+    
+    drawCreatedOnce = True
+    drawCreatedFirst = True
     #Display the draw
     listDraw()
 
@@ -228,7 +267,7 @@ def addResult():
 
 #function to display the menu
 def dispMenu():
-    print("==== WELCOME TO LU TABLE TENNIS ====")
+    print("\n==== WELCOME TO LU TABLE TENNIS ====")
     print("1 - List Draw")
     print("2 - List Teams and Players")
     print("3 - List Players - alphabetical (by surname)")
