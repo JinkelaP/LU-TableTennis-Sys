@@ -129,11 +129,13 @@ def addTeam():
     # Registering the first new player
     while player1Input == False:
         print('================')
-        newFirstname1 = str(input('Please type the firstname of player 1: ')).casefold().capitalize()
-        newSurname1 = str(input('Please type the Surname of player 1: ')).casefold().capitalize()
+        newFirstname1 = str(input('Please type the firstname of player 1: ')).casefold().capitalize().strip()
+        newSurname1 = str(input('Please type the Surname of player 1: ')).casefold().capitalize().strip()
         newName1Tuple = tuple((newFirstname1,newSurname1))
-        #
-        if newFirstname1.isnumeric() == True or newSurname1.isnumeric() == True:
+        
+                
+        
+        if (newFirstname1.isnumeric() == True or newSurname1.isnumeric() == True) or (newFirstname1== '' or newSurname1 == ''):
             nameCheckFail = str(input("*********************\n**  C A U T I O N  **\n*********************\nThe player's name must contain alphabet letters. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select: "))
             if nameCheckFail.upper() == 'Q':
                 return print('Return menu. No new team added.')
@@ -154,10 +156,10 @@ def addTeam():
 
     while player2Input == False:
         print('================')
-        newFirstname2 = str(input('Please type the firstname of player 2: ')).casefold().capitalize()
-        newSurname2 = str(input('Please type the Surname of player 2: ')).casefold().capitalize()
+        newFirstname2 = str(input('Please type the firstname of player 2: ')).casefold().capitalize().strip()
+        newSurname2 = str(input('Please type the Surname of player 2: ')).casefold().capitalize().strip()
         newName2Tuple = tuple((newFirstname2,newSurname2))
-        if newFirstname2.isnumeric() == True or newSurname2.isnumeric() == True:
+        if (newFirstname2.isnumeric() == True or newSurname2.isnumeric() == True) or (newFirstname2== '' or newSurname2 == ''):
             nameCheckFail = str(input("*********************\n**  C A U T I O N  **\n*********************\nThe player's name must contain alphabet letters. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select: "))
             if nameCheckFail.upper() == 'Q':
                 return print('Return menu. No new team added.')
@@ -419,7 +421,6 @@ while response.upper() != "Q":
         displayWinners()
     elif response.upper() == "R":
         input("[Press Enter]The menu will be repeated")
-
     else:
         input("[Press Enter]invalid response, please re-enter")
 
