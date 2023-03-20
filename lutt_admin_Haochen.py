@@ -45,10 +45,11 @@ def listDraw():
     # Print out a copy of the draw. If listDraw() is operated before createDraw(), user will be notified.
     if drawCreatedOnce == False or drawList == []:
         print("\n*********************\n**  C A U T I O N  **\n*********************\nYou need to CREAT THE DRAW before listing the draw when\n      - Running the program at the first time\nOR    - Added new teams.\n")
-    
+        input('[Press Enter to Acknowledge]')
+
     print("\n=== DRAW LIST ===\n")
-    colNames = {'TEAM 1': str, 'SCORE T1': int or bool, 'TEAM 2': str, 'SCORE T2': int or bool}
-    columnOutput(drawList,colNames,"|{: ^20}|{: ^10}|{: ^20}|{: ^10}|")
+    colNames = {'TEAM 1': str, 'SCORE T1': int or bool,'TEAM 2': str, 'SCORE T2': int or bool}
+    columnOutput(drawList,colNames,"|{0: ^20}|{1: ^10}| VS |{3: ^10}|{2: ^20}|")
     input("\nPress Enter to continue.")     # End function with this line
 
 def listTeams():
@@ -57,7 +58,7 @@ def listTeams():
     for team in dbTeams.keys():
         displayList.append((team,f'{dbTeams[team][0][0]} {dbTeams[team][0][1]}',f'{dbTeams[team][1][0]} {dbTeams[team][1][1]}'))
     print("\nALL TEAMS\n")
-    columnOutput(displayList,colTeams,"|{: ^15} |{: ^15} |{: ^15}|") #example of how to call columnOutput function
+    columnOutput(displayList,colTeams,"|{: ^20} |{: ^20}|{: ^20}|") #example of how to call columnOutput function
     
     
     input("\nPress Enter to continue.")     # End function with this line
@@ -124,7 +125,7 @@ def addTeam():
         newName1Tuple = tuple((newFirstname1,newSurname1))
         #
         if newFirstname1.isnumeric() == True or newSurname1.isnumeric() == True:
-            nameCheckFail = str(input("*********************\n**  C A U T I O N  **\n*********************\nThe player's name must contain alphabet letters. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:"))
+            nameCheckFail = str(input("*********************\n**  C A U T I O N  **\n*********************\nThe player's name must contain alphabet letters. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select: "))
             if nameCheckFail.upper() == 'Q':
                 return print('Return menu. No new team added.')
         
@@ -132,7 +133,7 @@ def addTeam():
         # If the player has been registered, the admin can either input a new name or leave the addTeam function
             while True:   
                 if nameCheck(newName1Tuple) == True:
-                    nameCheckFail = str(input('*********************\n**  C A U T I O N  **\n*********************\nThe player has been registered into another team! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
+                    nameCheckFail = str(input('*********************\n**  C A U T I O N  **\n*********************\nThe player has been registered into another team! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select: '))
                     if nameCheckFail.upper() == 'Q':
                         return print('Return menu. No new team added.')
                     break
@@ -148,7 +149,7 @@ def addTeam():
         newSurname2 = str(input('Please type the Surname of player 2: ')).casefold().capitalize()
         newName2Tuple = tuple((newFirstname2,newSurname2))
         if newFirstname2.isnumeric() == True or newSurname2.isnumeric() == True:
-            nameCheckFail = str(input("*********************\n**  C A U T I O N  **\n*********************\nThe player's name must contain alphabet letters. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:"))
+            nameCheckFail = str(input("*********************\n**  C A U T I O N  **\n*********************\nThe player's name must contain alphabet letters. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select: "))
             if nameCheckFail.upper() == 'Q':
                 return print('Return menu. No new team added.')
         
@@ -157,12 +158,12 @@ def addTeam():
         # If the player has been registered in other teams or in the player 1, the admin can either input a new name or leave the addTeam function
             while True:    
                 if nameCheck(newName2Tuple) == True:
-                    nameCheckFail = str(input('*********************\n**  C A U T I O N  **\n*********************\nThe player has been registered into another team! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
+                    nameCheckFail = str(input('*********************\n**  C A U T I O N  **\n*********************\nThe player has been registered into another team! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select: '))
                     if nameCheckFail.upper() == 'Q':
                         return print('Return menu. No new team added.')
                     break
                 elif newName1Tuple == newName2Tuple:
-                    nameCheckFail = str(input('*********************\n**  C A U T I O N  **\n*********************\nThe player name has been input as player 1! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select:'))
+                    nameCheckFail = str(input('*********************\n**  C A U T I O N  **\n*********************\nThe player name has been input as player 1! \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select: '))
                     if nameCheckFail.upper() == 'Q':
                         return print('Return menu. No new team added.')
                     break
@@ -261,36 +262,110 @@ def createDraw():
 
 def addResult():
     #update the result of a match, hint use the enumerate function to identify which match to update
+    while True:
+        if drawCreatedOnce == False:
+            print("\n*********************\n**  C A U T I O N  **\n*********************\nYou need to CREAT THE DRAW before listing the draw when\n      - Running the program at the first time\nOR    - Added new teams.\n")
+            preAddResult = input('[Press ENTER to Acknowledge or Q to exit]')
+            if preAddResult.upper() == 'Q':
+                return print('Return menu. No new team added.')
+        
+
+        global drawList
+        print("\n=== DRAW LIST ===\n")
+        if drawList == []:
+            print('*********************\n**  C A U T I O N  **\n*********************\nYou have not creat the draw!')
+            return input('Press Enter to return to menu.')
+        
+        addResultCols = {'Index':int,'Team 1':str,'Score T1':int or bool,'Team 2':str, 'Score T2':int or bool}
+        drawListDisplay = []
+
+        for index,newList in enumerate(drawList):
+            newList = drawList[index].copy()
+            newList.insert(0,index)
+            drawListDisplay.append(tuple(newList))
+        columnOutput(drawListDisplay,addResultCols,"{0: ^7}|{1: ^20}|{2:^10}| VS |{4:^10}|{3: ^20}|")
+        print('\n================\n')
+        
+        indexValidTrue = False
+        while indexValidTrue == False:
+            matchAddResultIndex = input('Please choose the match you are going to add results: ')
+            if matchAddResultIndex.isnumeric() == False:
+                print('*********************\n**  C A U T I O N  **\n*********************\nOnly numbers and valid index are allowed to be input!')
+            else:
+                if int(matchAddResultIndex) >= len(drawList):
+                    print('*********************\n**  C A U T I O N  **\n*********************\nThis index is not available!')
+                else:
+                    break
+        matchChosen = list(drawListDisplay[int(matchAddResultIndex)])
+
+        for index,item in enumerate(matchChosen):
+            if item == None:
+                matchChosen[index] = ""
+        
+        print("{0: ^7}|{1: ^20}|{2:^10}| VS |{4:^10}|{3: ^20}|".format(*matchChosen))
+
+        while True:
+            matchScore1 = input(f'Please input the score of {drawListDisplay[int(matchAddResultIndex)][1]}: ')
+            matchScore2 = input(f'Please input the score of {drawListDisplay[int(matchAddResultIndex)][3]}: ')
+            if (matchScore1.isnumeric() == False) or (matchScore2.isnumeric() == False):
+                print('*********************\n**  C A U T I O N  **\n*********************\nOnly numbers and valid index are allowed to be input!')
+            else:
+                if int(matchScore1) + int(matchScore2) != 5:
+                    print('*********************\n**  C A U T I O N  **\n*********************\nThe total score should equal to 5!')
+                else:
+                    break
+        
+        drawList[int(matchAddResultIndex)][1] = int(matchScore1)
+        drawList[int(matchAddResultIndex)][3] = int(matchScore2)
+        matchResultAddOK = drawList[int(matchAddResultIndex)]
+        
+        print('\n=================')
+        print('New Result Created!')
+        print("|{0: ^20}|{1:^10}| VS |{3:^10}|{2: ^20}|".format(*matchResultAddOK))
+        print('=================\n')
+        
+        sufAddResult = input('Input Q to return to menu or ENTER to add another results.')
+        if sufAddResult.upper() == 'Q':
+                break
+
+
+
+def displayWinners():
+    if drawCreatedOnce == False:
+        print("\n*********************\n**  C A U T I O N  **\n*********************\nYou need to CREAT THE DRAW before listing the draw when\n      - Running the program at the first time\nOR    - Added new teams.\n")
+        preAddResult = input('[Press ENTER to Acknowledge or Q to exit]')
+        if preAddResult.upper() == 'Q':
+            return print('Return menu. No new team added.')
     
+
     global drawList
-    print('================')
+    print("\n=== Winners Display ===\n")
     if drawList == []:
         print('*********************\n**  C A U T I O N  **\n*********************\nYou have not creat the draw!')
         return input('Press Enter to return to menu.')
     
-    addResultCols = {'Index':int,'Team 1':str,'VS':str,'Team 2':str}
+    addResultCols = {'WINNER':str,'Team 1':str,'Score T1':int or bool,'Team 2':str, 'Score T2':int or bool}
     drawListDisplay = []
 
-    for index,list in enumerate(drawList):
-        list = drawList[index].copy()
-        list.insert(0,index)
-        drawListDisplay.append(tuple(list))
-    columnOutput(drawListDisplay,addResultCols,"{0: ^7}|{1: ^20} | VS | {3: ^20}|")
-    matchAddResultIndex = input('Please choose the match you are going to add results:')
-    
-    if matchAddResultIndex.isnumeric() == False:
-        print('CAUTION')
-
-    
-    print('================')
-    input('Press Enter to return to menu.')
-
-
+    for index,newList in enumerate(drawList):
+        newList = drawList[index].copy()
+        if (newList[1] == None) or (newList[3] == None) == True:
+            winner = 'N/A'
+        else:
+            if newList[1] > newList[3]:
+                winner = 'TEAM 1'
+            else:
+                winner = 'TEAM 2'
+        newList.insert(0,winner)
+        drawListDisplay.append(tuple(newList))
+    columnOutput(drawListDisplay,addResultCols,"{0: ^10}|{1: ^20}|{2:^10}| VS |{4:^10}|{3: ^20}|")
+    print('\n================\n')
+    input('[Press ENTER to exit]')
 
 
 #function to display the menu
 def dispMenu():
-    print("\n==== WELCOME TO LU TABLE TENNIS ====")
+    print("\n==== WELCOME TO LU TABLE TENNIS ====\n")
     print("1 - List Draw")
     print("2 - List Teams and Players")
     print("3 - List Players - alphabetical (by surname)")
@@ -298,8 +373,9 @@ def dispMenu():
     print("5 - Add Team")
     print("6 - Add Match Result")
     print("7 - Create Draw")
+    print("8 - Display Winners\n")
     print("R - Repeat the menu")
-    print("Q - Quit")
+    print("Q - Quit\n")
 
 #This is the main program
 
@@ -322,6 +398,8 @@ while response.upper() != "Q":
         addResult()
     elif response == "7":
         createDraw()
+    elif response == "8":
+        displayWinners()
     elif response.upper() == "R":
         print("The menu has been repeated")
     else:
