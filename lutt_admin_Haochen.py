@@ -3,8 +3,16 @@
 ### Student ID: 1153918
 ################################################################################################## 
 
+#
+# Add colors for winners and cautions
+#
+
+
+
 import lutt_admin_data       #lutt_admin_data.py contains the data lists and must be in the same folder as this file
 import datetime
+import os
+import platform
 
 # The list variables
 colTeams = lutt_admin_data.colTeams
@@ -46,11 +54,12 @@ def listDraw():
     if drawCreatedOnce == False or drawList == []:
         print("\n*********************\n**  C A U T I O N  **\n*********************\nYou need to CREAT THE DRAW before listing the draw when\n      - Running the program at the first time\nOR    - Added new teams.\n")
         input('[Press Enter to Acknowledge]')
-
+    
     print("\n=== DRAW LIST ===\n")
     colNames = {'TEAM 1': str, 'SCORE T1': int or bool,'TEAM 2': str, 'SCORE T2': int or bool}
     columnOutput(drawList,colNames,"|{0: ^20}|{1: ^10}| VS |{3: ^10}|{2: ^20}|")
     input("\nPress Enter to continue.")     # End function with this line
+
 
 def listTeams():
     # Print a list of the teams
@@ -58,7 +67,7 @@ def listTeams():
     for team in dbTeams.keys():
         displayList.append((team,f'{dbTeams[team][0][0]} {dbTeams[team][0][1]}',f'{dbTeams[team][1][0]} {dbTeams[team][1][1]}'))
     print("\nALL TEAMS\n")
-    columnOutput(displayList,colTeams,"|{: ^20} |{: ^20}|{: ^20}|") #example of how to call columnOutput function
+    columnOutput(displayList,colTeams,"|{: ^20}||{: ^20}|{: ^20}|") #example of how to call columnOutput function
     
     
     input("\nPress Enter to continue.")     # End function with this line
@@ -120,11 +129,13 @@ def addTeam():
     # Registering the first new player
     while player1Input == False:
         print('================')
-        newFirstname1 = str(input('Please type the firstname of player 1: ')).casefold().capitalize()
-        newSurname1 = str(input('Please type the Surname of player 1: ')).casefold().capitalize()
+        newFirstname1 = str(input('Please type the firstname of player 1: ')).casefold().capitalize().strip()
+        newSurname1 = str(input('Please type the Surname of player 1: ')).casefold().capitalize().strip()
         newName1Tuple = tuple((newFirstname1,newSurname1))
-        #
-        if newFirstname1.isnumeric() == True or newSurname1.isnumeric() == True:
+        
+                
+        
+        if (newFirstname1.isnumeric() == True or newSurname1.isnumeric() == True) or (newFirstname1== '' or newSurname1 == ''):
             nameCheckFail = str(input("*********************\n**  C A U T I O N  **\n*********************\nThe player's name must contain alphabet letters. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select: "))
             if nameCheckFail.upper() == 'Q':
                 return print('Return menu. No new team added.')
@@ -145,10 +156,10 @@ def addTeam():
 
     while player2Input == False:
         print('================')
-        newFirstname2 = str(input('Please type the firstname of player 2: ')).casefold().capitalize()
-        newSurname2 = str(input('Please type the Surname of player 2: ')).casefold().capitalize()
+        newFirstname2 = str(input('Please type the firstname of player 2: ')).casefold().capitalize().strip()
+        newSurname2 = str(input('Please type the Surname of player 2: ')).casefold().capitalize().strip()
         newName2Tuple = tuple((newFirstname2,newSurname2))
-        if newFirstname2.isnumeric() == True or newSurname2.isnumeric() == True:
+        if (newFirstname2.isnumeric() == True or newSurname2.isnumeric() == True) or (newFirstname2== '' or newSurname2 == ''):
             nameCheckFail = str(input("*********************\n**  C A U T I O N  **\n*********************\nThe player's name must contain alphabet letters. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select: "))
             if nameCheckFail.upper() == 'Q':
                 return print('Return menu. No new team added.')
@@ -195,7 +206,10 @@ def addTeam():
                 teamNameCheckResult = False
 
             else:
-                teamNameCheckResult = False
+                if newTeamName == '':
+                    teamNameCheckResult = True
+                else:
+                    teamNameCheckResult = False
         
         if teamNameCheckResult == False:
             if newTeamName2 == newTeamName:
@@ -204,7 +218,7 @@ def addTeam():
             print('Team name check PASSED.\n')
             break
         elif teamNameCheckResult == True:
-            newTeamName = str(input("Please create a different team name: "))
+            newTeamName = str(input("Please create a different team name: ")).strip()
             newTeamName2 = None
     
     
@@ -254,7 +268,7 @@ def createDraw():
     print('\n=================')
     print('New Draw Created!')
     print('=================\n')
-    
+    input('\n[Press Enter to show the draw list]')
     drawCreatedOnce = True
     drawCreatedFirst = True
     #Display the draw
@@ -322,12 +336,13 @@ def addResult():
         
         print('\n=================')
         print('New Result Created!')
-        print("|{0: ^20}|{1:^10}| VS |{3:^10}|{2: ^20}|".format(*matchResultAddOK))
+        # print("|{0: ^20}|{1:^10}| VS |{3:^10}|{2: ^20}|".format(*matchResultAddOK))
         print('=================\n')
         
         sufAddResult = input('Input Q to return to menu or ENTER to add another results.')
         if sufAddResult.upper() == 'Q':
                 break
+        clearTerminal()
 
 
 # display the winner of matches
@@ -363,6 +378,13 @@ def displayWinners():
     print('\n================\n')
     input('[Press ENTER to exit]')
 
+# Provide a clean terminal for user after every function
+def clearTerminal():
+    if platform.system().lower() == "windows":
+        os.system("cls")
+    else:
+        os.system("clear")
+
 
 #function to display the menu
 def dispMenu():
@@ -379,33 +401,50 @@ def dispMenu():
     print("Q - Quit\n")
 
 #This is the main program
-
+clearTerminal()
 # Repeat this until user enters a "Q"
 dispMenu()
 
 response = input("Please select menu choice: ")
 while response.upper() != "Q":
     if response == "1":
+        clearTerminal()
+        print("1 - List Draw")
         listDraw()
     elif response == "2":
+        clearTerminal()
+        print("2 - List Teams and Players")
         listTeams()
     elif response == "3":
+        clearTerminal()
+        print("3 - List Players - alphabetical (by surname)")
         listMembersSurnameAlpha()
     elif response == "4":
+        clearTerminal()
+        print("4 - List Players - alphabetical (by firstname)")
         listMembersFirstnameAlpha()
     elif response == "5":
+        clearTerminal()
+        print("5 - Add Team")
         addTeam()
     elif response == "6":
+        clearTerminal()
+        print("6 - Add Match Result")
         addResult()
     elif response == "7":
+        clearTerminal()
+        print("7 - Create Draw")
         createDraw()
     elif response == "8":
+        clearTerminal()
+        print("8 - Display Winners\n")
         displayWinners()
     elif response.upper() == "R":
-        print("The menu has been repeated")
+        input("[Press Enter]The menu will be repeated")
     else:
-        print("invalid response, please re-enter")
+        input("[Press Enter]invalid response, please re-enter")
 
+    clearTerminal()
     print("")
     dispMenu()
     response = input("Please select menu choice: ")
