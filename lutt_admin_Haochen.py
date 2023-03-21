@@ -54,7 +54,7 @@ def listDraw():
     if drawCreatedOnce == False or drawList == []:
         print("\n*********************\n**  C A U T I O N  **\n*********************\nYou need to CREAT THE DRAW before listing the draw when\n      - Running the program at the first time\nOR    - Added new teams.\n")
         input('[Press Enter to Acknowledge]')
-
+    
     print("\n=== DRAW LIST ===\n")
     colNames = {'TEAM 1': str, 'SCORE T1': int or bool,'TEAM 2': str, 'SCORE T2': int or bool}
     columnOutput(drawList,colNames,"|{0: ^20}|{1: ^10}| VS |{3: ^10}|{2: ^20}|")
@@ -67,7 +67,7 @@ def listTeams():
     for team in dbTeams.keys():
         displayList.append((team,f'{dbTeams[team][0][0]} {dbTeams[team][0][1]}',f'{dbTeams[team][1][0]} {dbTeams[team][1][1]}'))
     print("\nALL TEAMS\n")
-    columnOutput(displayList,colTeams,"|{: ^20} |{: ^20}|{: ^20}|") #example of how to call columnOutput function
+    columnOutput(displayList,colTeams,"|{: ^20}||{: ^20}|{: ^20}|") #example of how to call columnOutput function
     
     
     input("\nPress Enter to continue.")     # End function with this line
@@ -206,7 +206,10 @@ def addTeam():
                 teamNameCheckResult = False
 
             else:
-                teamNameCheckResult = False
+                if newTeamName == '':
+                    teamNameCheckResult = True
+                else:
+                    teamNameCheckResult = False
         
         if teamNameCheckResult == False:
             if newTeamName2 == newTeamName:
@@ -215,7 +218,7 @@ def addTeam():
             print('Team name check PASSED.\n')
             break
         elif teamNameCheckResult == True:
-            newTeamName = str(input("Please create a different team name: "))
+            newTeamName = str(input("Please create a different team name: ")).strip()
             newTeamName2 = None
     
     
@@ -265,7 +268,7 @@ def createDraw():
     print('\n=================')
     print('New Draw Created!')
     print('=================\n')
-    
+    input('\n[Press Enter to show the draw list]')
     drawCreatedOnce = True
     drawCreatedFirst = True
     #Display the draw
@@ -397,27 +400,43 @@ def dispMenu():
     print("Q - Quit\n")
 
 #This is the main program
-
+clearTerminal()
 # Repeat this until user enters a "Q"
 dispMenu()
 
 response = input("Please select menu choice: ")
 while response.upper() != "Q":
     if response == "1":
+        clearTerminal()
+        print("1 - List Draw")
         listDraw()
     elif response == "2":
+        clearTerminal()
+        print("2 - List Teams and Players")
         listTeams()
     elif response == "3":
+        clearTerminal()
+        print("3 - List Players - alphabetical (by surname)")
         listMembersSurnameAlpha()
     elif response == "4":
+        clearTerminal()
+        print("4 - List Players - alphabetical (by firstname)")
         listMembersFirstnameAlpha()
     elif response == "5":
+        clearTerminal()
+        print("5 - Add Team")
         addTeam()
     elif response == "6":
+        clearTerminal()
+        print("6 - Add Match Result")
         addResult()
     elif response == "7":
+        clearTerminal()
+        print("7 - Create Draw")
         createDraw()
     elif response == "8":
+        clearTerminal()
+        print("8 - Display Winners\n")
         displayWinners()
     elif response.upper() == "R":
         input("[Press Enter]The menu will be repeated")
