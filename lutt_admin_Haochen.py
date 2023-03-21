@@ -342,6 +342,7 @@ def addResult():
         sufAddResult = input('Input Q to return to menu or ENTER to add another results.')
         if sufAddResult.upper() == 'Q':
                 break
+        clearTerminal()
 
 
 # display the winner of matches
