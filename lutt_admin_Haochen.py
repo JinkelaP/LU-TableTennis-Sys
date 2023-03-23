@@ -52,7 +52,7 @@ def columnOutput(dbData,cols,formatStr):
 def listDraw():
     # Print out a copy of the draw. If listDraw() is operated before createDraw(), user will be notified.
     if drawCreatedOnce == False or drawList == []:
-        print("\n*********************\n**  C A U T I O N  **\n*********************\nYou need to CREAT THE DRAW before listing the draw when\n      - Running the program at the first time\nOR    - Added new teams.\n")
+        print("\n*********************\n**  C A U T I O N  **\n*********************\nYou need to CREATE THE DRAW before listing the draw when\n      - Running the program at the first time\nOR    - Added new teams.\n")
         input('[Press Enter to Acknowledge]')
     
     print("\n=== DRAW LIST ===\n")
@@ -278,7 +278,7 @@ def addResult():
     #update the result of a match, hint use the enumerate function to identify which match to update
     while True:
         if drawCreatedOnce == False:
-            print("\n*********************\n**  C A U T I O N  **\n*********************\nYou need to CREAT THE DRAW before listing the draw when\n      - Running the program at the first time\nOR    - Added new teams.\n")
+            print("\n*********************\n**  C A U T I O N  **\n*********************\nYou need to CREATE THE DRAW before listing the draw when\n      - Running the program at the first time\nOR    - Added new teams.\n")
             preAddResult = input('[Press ENTER to Acknowledge or Q to exit]')
             if preAddResult.upper() == 'Q':
                 return print('Return menu. No new team added.')
@@ -287,7 +287,7 @@ def addResult():
         global drawList
         print("\n=== DRAW LIST ===\n")
         if drawList == []:
-            print('*********************\n**  C A U T I O N  **\n*********************\nYou have not creat the draw!')
+            print('*********************\n**  C A U T I O N  **\n*********************\nYou have not create the draw!')
             return input('Press Enter to return to menu.')
         
         addResultCols = {'Index':int,'Team 1':str,'Score T1':int or bool,'Team 2':str, 'Score T2':int or bool}
