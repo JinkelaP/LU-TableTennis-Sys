@@ -135,8 +135,8 @@ def addTeam():
         
                 
         
-        if (newFirstname1.isnumeric() == True or newSurname1.isnumeric() == True) or (newFirstname1== '' or newSurname1 == ''):
-            nameCheckFail = str(input("*********************\n**  C A U T I O N  **\n*********************\nThe player's name must contain alphabet letters. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select: "))
+        if (newFirstname1.isalpha() == False or newSurname1.isalpha() == False) or (newFirstname1== '' or newSurname1 == ''):
+            nameCheckFail = str(input("*********************\n**  C A U T I O N  **\n*********************\nOnly alphabets are allowed. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select: "))
             if nameCheckFail.upper() == 'Q':
                 return print('Return menu. No new team added.')
         
@@ -159,8 +159,8 @@ def addTeam():
         newFirstname2 = str(input('Please type the firstname of player 2: ')).casefold().capitalize().strip()
         newSurname2 = str(input('Please type the Surname of player 2: ')).casefold().capitalize().strip()
         newName2Tuple = tuple((newFirstname2,newSurname2))
-        if (newFirstname2.isnumeric() == True or newSurname2.isnumeric() == True) or (newFirstname2== '' or newSurname2 == ''):
-            nameCheckFail = str(input("*********************\n**  C A U T I O N  **\n*********************\nThe player's name must contain alphabet letters. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select: "))
+        if (newFirstname2.isalpha() == False or newSurname2.isalpha() == False) or (newFirstname2== '' or newSurname2 == ''):
+            nameCheckFail = str(input("*********************\n**  C A U T I O N  **\n*********************\nOnly alphabets are allowed. \nPress Enter to input a new name or enter Q to return to the menu.\nPlease select: "))
             if nameCheckFail.upper() == 'Q':
                 return print('Return menu. No new team added.')
         
@@ -185,7 +185,7 @@ def addTeam():
     
     # Check if teamName is unique. If not, another backup name consisting of reversed-ordered surname will be checked. 
     # If also not unique, user will be asked to create a new name.
-    # The new name will also be checked.
+    # The new name will also be validated.
     newTeamName = newSurname1 + newSurname2
     newTeamName2 = newSurname2 + newSurname1
     while True:
@@ -298,7 +298,7 @@ def addResult():
             newList = drawList[index].copy()
             newList.insert(0,index)
             drawListDisplay.append(tuple(newList))
-        columnOutput(drawListDisplay,addResultCols,"{0: ^7}|{1: ^20}|{2:^10}| VS |{4:^10}|{3: ^20}|")
+        columnOutput(drawListDisplay,addResultCols,"{0: ^7}||{1: ^20}|{2:^10}| VS |{4:^10}|{3: ^20}|")
         print('\n================\n')
         
         indexValidTrue = False
@@ -374,7 +374,7 @@ def displayWinners():
                 winner = 'TEAM 2'
         newList.insert(0,winner)
         drawListDisplay.append(tuple(newList))
-    columnOutput(drawListDisplay,addResultCols,"{0: ^10}|{1: ^20}|{2:^10}| VS |{4:^10}|{3: ^20}|")
+    columnOutput(drawListDisplay,addResultCols,"{0: ^10}||{1: ^20}|{2:^10}| VS |{4:^10}|{3: ^20}|")
     print('\n================\n')
     input('[Press ENTER to exit]')
 
